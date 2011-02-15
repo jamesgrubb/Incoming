@@ -1,0 +1,13 @@
+{
+  "name": "Aerotwist Incoming",
+  "version": "1.3",
+  "description": "Pushes random balony down the intertubes.",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "popup": "popup.html"
+  },
+  "permissions": [
+    "http://YOUR_SITE",
+    "tabs"
+  ]
+}

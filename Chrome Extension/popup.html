@@ -1,0 +1,103 @@
+<style>
+body
+{
+    width: 300px;
+    padding: 10px;
+    font-family: Arial, Sans-serif;
+    font-size: 11px;
+}
+
+span,
+input,
+textarea
+{
+    display: block;
+    float: left;
+    width: 80px;
+    font-family: Arial, Sans-serif;
+    font-size: 11px;
+}
+
+span
+{
+    padding-top: 6px;
+}
+
+textarea
+{
+    width: 210px;
+    height: 110px;
+}
+
+input
+{
+    width: 165px;
+}
+
+div
+{
+    clear: both;
+    padding-bottom: 15px;
+}
+</style>
+
+<div>
+    <div><span>Title:</span><input id="title" type="text" name="title" value = "" /></div>
+    <div><span>Link:</span><input id="url" type="text" name="url" value = "" /></div>
+    <div><span>Description:</span><textarea id="description" type="text" name="description"></textarea></div>
+    <div><span>Push to Twitter:</span><input id="twitter" type="checkbox" name="twitter" value = "1" /></div>
+    <div><span></span><a href="javascript:go()" onclick="go">Post</a></div>
+</div>
+
+<div id="status"></div>
+
+<script>
+
+/**
+ * Gets us the basic info on the current tab
+ */
+chrome.tabs.getSelected(null, function(tab)
+{
+    document.getElementById('title').value = tab.title;
+    document.getElementById('url').value = tab.url;
+});
+
+/**
+ * Does all the work
+ */
+function go()
+{
+	// status update
+    document.getElementById('status').innerHTML = 'Sending...';
+
+	// get our vars together
+    var title 		= document.getElementById('title').value;
+    var link 		= document.getElementById('url').value;
+    var description = document.getElementById('description').value;
+    var twitter 	= document.getElementById('twitter').checked ? 1 : 0;
+    var vars 		= "title="+encodeURIComponent(title)+"&link="+encodeURIComponent(link)+"&description="+encodeURIComponent(description)+"&twitter="+encodeURIComponent(twitter);
+    
+	// now create a new HTTP request
+    var req = new XMLHttpRequest();
+    req.open(
+        "POST",
+        "http://YOURSITE",
+        true,
+        "USERNAME",
+        "PASS");
+    req.onload = done;
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+	// Go!
+    req.send(vars);
+}
+
+/**
+ * Hollerback for when we're done
+ */
+function done()
+{
+    document.getElementById('status').innerHTML = 'Sent';
+}
+</script>
+
