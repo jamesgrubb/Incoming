@@ -11,11 +11,15 @@ $title		 	= isset($_POST["title"]) 		? stripslashes($_POST["title"]) : "No Title
 $description 	= isset($_POST["description"]) 	? stripslashes($_POST["description"]) : "";
 $link 		 	= isset($_POST["link"]) 		? $_POST["link"] : "Link";
 $twitterTitle	= $title;
+$originalLink	= $link;
 
 // we need to bit.ly the link
 $bitlyLink	 	= file_get_contents("http://api.bit.ly/v3/shorten?domain=".BITLY_DOMAIN."&login=".BITLY_LOGIN."&apiKey=".BITLY_API_KEY."&longUrl=".urlencode($link)."&format=json");
 $objLink	 	= json_decode($bitlyLink);
 $link 		 	= $objLink->data->url;
+
+if(!is_null($link))
+	$link = $originalLink;
 
 // push to the database
 Database::set("INSERT INTO items SET fTitle = ?, fDescription = ?, fDateTime = NOW(), fLink = ?", array($title, $description, $link));
@@ -39,6 +43,6 @@ if(isset($_POST["twitter"]) && $_POST["twitter"] == 1)
 		// now do the push
 		$twitterObj->post('/statuses/update.json', array('status' => TWITTER_PREAMBLE.stripslashes($twitterTitle).' - '.$link));
 	}
-}*/
+}
 
 ?>
