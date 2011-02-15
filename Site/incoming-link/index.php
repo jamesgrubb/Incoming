@@ -37,7 +37,7 @@ if(isset($_POST["twitter"]) && $_POST["twitter"] == 1)
 		$twitterObjUnAuth 	= new EpiTwitter($consumer_key, $consumer_secret);
 
 		// now do the push
-		$twitterObj->post('/statuses/update.json', array('status' => TWITTER_PREAMBLE.stripslashes($twitterTtl).' - '.$link));
+		$twitterObj->post('/statuses/update.json', array('status' => TWITTER_PREAMBLE.stripslashes($twitterTitle).' - '.$link));
 	}
 }
 
