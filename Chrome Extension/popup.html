@@ -68,7 +68,8 @@ chrome.tabs.getSelected(null, function(tab)
 function go()
 {
 	// status update
-    document.getElementById('status').innerHTML = 'Sending...';
+    if(document.getElementById('status'))
+      document.getElementById('status').innerHTML = 'Sending...';
 
 	// get our vars together
     var title 		= document.getElementById('title').value;
@@ -97,7 +98,8 @@ function go()
  */
 function done()
 {
-    document.getElementById('status').innerHTML = 'Sent';
+    if(document.getElementById('status'))
+      document.getElementById('status').innerHTML = 'Sent';
 }
 </script>
 
