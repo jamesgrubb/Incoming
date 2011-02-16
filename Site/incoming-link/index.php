@@ -1,6 +1,7 @@
 <?php
 
 // get our data connection ready
+require("../definitions/defs.twitter.php");
 require("../definitions/defs.bitly.php");
 require("../definitions/defs.database.php");
 require("../classes/class.dataobject.php");
